@@ -66,12 +66,15 @@
 
 -(instancetype) initWithURL:(NSURL*)urlIn
 {
-    return [self initWithURLProvider:^NSURL* { return urlIn; }];
+    self = [self initWithURLProvider:^NSURL* { return urlIn; }];
+    self->currentUrl = urlIn;
+    return self;
 }
 
 -(instancetype) initWithURL:(NSURL *)urlIn httpRequestHeaders:(NSDictionary *)httpRequestHeaders
 {
     self = [self initWithURLProvider:^NSURL* { return urlIn; }];
+    self->currentUrl = urlIn;
     self->requestHeaders = httpRequestHeaders;
     return self;
 }
@@ -95,7 +98,6 @@
         fileLength = -1;
         
         self->asyncUrlProvider = [asyncUrlProviderIn copy];
-        
         audioFileTypeHint = [STKLocalFileDataSource audioFileTypeHintFromFileExtension:self->currentUrl.pathExtension];
     }
     
@@ -328,7 +330,7 @@
         NSString* contentType = [httpHeaders objectForKey:@"Content-Type"] ?: [httpHeaders objectForKey:@"content-type"] ;
         AudioFileTypeID typeIdFromMimeType = [STKHTTPDataSource audioFileTypeHintFromMimeType:contentType];
         
-        if (typeIdFromMimeType != 0)
+        if (typeIdFromMimeType != 0 && audioFileTypeHint == 0)
         {
             audioFileTypeHint = typeIdFromMimeType;
         }

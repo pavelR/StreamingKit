@@ -50,8 +50,6 @@ typedef void(^STKAsyncURLProvider)(STKHTTPDataSource* dataSource, BOOL forSeek, 
 +(AudioFileTypeID) audioFileTypeHintFromMimeType:(NSString*)fileExtension;
 -(instancetype) initWithURL:(NSURL*)url;
 -(instancetype) initWithURL:(NSURL*)url httpRequestHeaders:(NSDictionary*)httpRequestHeaders;
--(instancetype) initWithURLProvider:(STKURLProvider)urlProvider;
--(instancetype) initWithAsyncURLProvider:(STKAsyncURLProvider)asyncUrlProvider;
 -(nullable NSRunLoop*) eventsRunLoop;
 -(void) reconnect;
 
