@@ -66,16 +66,16 @@
 
 -(instancetype) initWithURL:(NSURL*)urlIn
 {
-    self = [self initWithURLProvider:^NSURL* { return urlIn; }];
-    self->currentUrl = urlIn;
+    self = [self initWithURL:urlIn httpRequestHeaders:@{}];
     return self;
 }
 
 -(instancetype) initWithURL:(NSURL *)urlIn httpRequestHeaders:(NSDictionary *)httpRequestHeaders
 {
     self = [self initWithURLProvider:^NSURL* { return urlIn; }];
-    self->currentUrl = urlIn;
-    self->requestHeaders = httpRequestHeaders;
+    currentUrl = urlIn;
+    requestHeaders = httpRequestHeaders;
+    audioFileTypeHint = [STKLocalFileDataSource audioFileTypeHintFromFileExtension:self->currentUrl.pathExtension];
     return self;
 }
 
@@ -98,15 +98,9 @@
         fileLength = -1;
         
         self->asyncUrlProvider = [asyncUrlProviderIn copy];
-        audioFileTypeHint = [STKLocalFileDataSource audioFileTypeHintFromFileExtension:self->currentUrl.pathExtension];
     }
     
     return self;
-}
-
--(void) dealloc
-{
-    NSLog(@"STKHTTPDataSource dealloc");
 }
 
 -(NSURL*) url
