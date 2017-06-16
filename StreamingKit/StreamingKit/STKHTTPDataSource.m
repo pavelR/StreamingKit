@@ -416,6 +416,11 @@
     [self seekToOffset:self->supportsSeek ? self.position : 0];
 }
 
+-(void) setRequestHeaders:(NSDictionary*)httpRequestHeaders
+{
+    self->requestHeaders = httpRequestHeaders;
+}
+
 -(void) seekToOffset:(SInt64)offset
 {
     NSRunLoop* savedEventsRunLoop = eventsRunLoop;
